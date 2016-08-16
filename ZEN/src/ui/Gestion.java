@@ -283,27 +283,53 @@ public class Gestion {
 		
 		JPanel pnListaAbonos = new JPanel();
 		tabAbonos.addTab("Lista de abonos", null, pnListaAbonos, null);
-		pnListaAbonos.setLayout(null);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 11, 743, 374);
-		pnListaAbonos.add(scrollPane_1);
 		
 		tblListaAbonos = new JTable();
 		tblListaAbonos.setAutoCreateRowSorter(true);
 		scrollPane_1.setViewportView(tblListaAbonos);
+		GroupLayout gl_pnListaAbonos = new GroupLayout(pnListaAbonos);
+		gl_pnListaAbonos.setHorizontalGroup(
+			gl_pnListaAbonos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnListaAbonos.createSequentialGroup()
+					.addGap(10)
+					.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE)
+					.addGap(10))
+		);
+		gl_pnListaAbonos.setVerticalGroup(
+			gl_pnListaAbonos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnListaAbonos.createSequentialGroup()
+					.addGap(11)
+					.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+					.addGap(11))
+		);
+		pnListaAbonos.setLayout(gl_pnListaAbonos);
 		
 		JPanel pnListaEstadosCuenta = new JPanel();
 		tabAbonos.addTab("Estados de cuenta", null, pnListaEstadosCuenta, null);
-		pnListaEstadosCuenta.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 743, 374);
-		pnListaEstadosCuenta.add(scrollPane);
 		
 		tblListaEstadosCuenta = new JTable();
 		tblListaEstadosCuenta.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(tblListaEstadosCuenta);
+		GroupLayout gl_pnListaEstadosCuenta = new GroupLayout(pnListaEstadosCuenta);
+		gl_pnListaEstadosCuenta.setHorizontalGroup(
+			gl_pnListaEstadosCuenta.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnListaEstadosCuenta.createSequentialGroup()
+					.addGap(10)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE)
+					.addGap(10))
+		);
+		gl_pnListaEstadosCuenta.setVerticalGroup(
+			gl_pnListaEstadosCuenta.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnListaEstadosCuenta.createSequentialGroup()
+					.addGap(11)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+					.addGap(11))
+		);
+		pnListaEstadosCuenta.setLayout(gl_pnListaEstadosCuenta);
 		
 		JTabbedPane tabbedPane_5 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.addTab("New tab", null, tabbedPane_5, null);

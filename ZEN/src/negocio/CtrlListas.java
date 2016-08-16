@@ -4,8 +4,11 @@ import java.sql.*;
 import java.util.Vector;
 
 import javax.swing.JTable;
+import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
+import utils.MultiSortTableCellHeaderRenderer;
 import dataAdapter.*;
 
 public class CtrlListas {
@@ -17,6 +20,9 @@ public class CtrlListas {
 		rs = da.getListaClientes();
 		try {
 			tabla.setModel(buildTableModel(rs));
+			RowSorter sorter = new TableRowSorter(buildTableModel(rs));
+                tabla.setRowSorter(sorter);
+                tabla.getTableHeader().setDefaultRenderer(new MultiSortTableCellHeaderRenderer());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -30,6 +36,9 @@ public class CtrlListas {
 		rs = da.getListaEstadosCuenta();
 		try {
 			tabla.setModel(buildTableModel(rs));
+			RowSorter sorter = new TableRowSorter(buildTableModel(rs));
+            tabla.setRowSorter(sorter);
+            tabla.getTableHeader().setDefaultRenderer(new MultiSortTableCellHeaderRenderer());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,6 +52,9 @@ public class CtrlListas {
 		rs = da.getListaAbonos();
 		try {
 			tabla.setModel(buildTableModel(rs));
+			RowSorter sorter = new TableRowSorter(buildTableModel(rs));
+            tabla.setRowSorter(sorter);
+            tabla.getTableHeader().setDefaultRenderer(new MultiSortTableCellHeaderRenderer());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

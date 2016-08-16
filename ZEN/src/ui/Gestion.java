@@ -22,6 +22,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.SwingConstants;
 import javax.swing.JInternalFrame;
 import javax.swing.JComboBox;
@@ -37,8 +39,12 @@ import negocio.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public class Gestion {
 
@@ -74,12 +80,40 @@ public class Gestion {
 	 * Create the application.
 	 */
 	public Gestion() {
+		TableRowSorter<TableModel> sorter;
+		int columnIndexToSort;
+		List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+		
 		initialize();
+		
 		ctrlCliente= new CtrlABMCCliente();
 		ctrlListas= new CtrlListas();
+		
+		//Carga de listas y ordenamiento inicial
+		
 		ctrlListas.cargarListaClientes(tblListaClientes);
+		sorter = new TableRowSorter<>(tblListaClientes.getModel());
+		tblListaClientes.setRowSorter(sorter);
+		columnIndexToSort = 1;
+		sortKeys.add(new RowSorter.SortKey(columnIndexToSort, SortOrder.ASCENDING));
+		sorter.setSortKeys(sortKeys);
+		sorter.sort();
+		
 		ctrlListas.cargarListaAbonos(tblListaAbonos);
+		sorter = new TableRowSorter<>(tblListaAbonos.getModel());
+		tblListaAbonos.setRowSorter(sorter);
+		columnIndexToSort = 1;
+		sortKeys.add(new RowSorter.SortKey(columnIndexToSort, SortOrder.ASCENDING));
+		sorter.setSortKeys(sortKeys);
+		sorter.sort();
+		
 		ctrlListas.cargarListaEstadosCuenta(tblListaEstadosCuenta);
+		sorter = new TableRowSorter<>(tblListaEstadosCuenta.getModel());
+		tblListaEstadosCuenta.setRowSorter(sorter);
+		columnIndexToSort = 1;
+		sortKeys.add(new RowSorter.SortKey(columnIndexToSort, SortOrder.ASCENDING));
+		sorter.setSortKeys(sortKeys);
+		sorter.sort();
 
 	}
 

@@ -41,6 +41,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -59,6 +60,8 @@ public class Gestion {
 	private JTable tblListaClientes;
 	private JTable tblListaEstadosCuenta;
 	private JTable tblListaAbonos;
+	private TableRowSorter<TableModel> sorterLC, sorterLEC, sorterLA;
+
 
 	/**
 	 * Launch the application.
@@ -80,11 +83,10 @@ public class Gestion {
 	 * Create the application.
 	 */
 	public Gestion() {
-		TableRowSorter<TableModel> sorter;
 		int columnIndexToSort;
 		List<RowSorter.SortKey> sortKeys = new ArrayList<>();
 		
-		initialize();
+		initialize(sortKeys);
 		
 		ctrlCliente= new CtrlABMCCliente();
 		ctrlListas= new CtrlListas();
@@ -92,35 +94,35 @@ public class Gestion {
 		//Carga de listas y ordenamiento inicial
 		
 		ctrlListas.cargarListaClientes(tblListaClientes);
-		sorter = new TableRowSorter<>(tblListaClientes.getModel());
-		tblListaClientes.setRowSorter(sorter);
+		sorterLC = new TableRowSorter<>(tblListaClientes.getModel());
+		tblListaClientes.setRowSorter(sorterLC);
 		columnIndexToSort = 1;
 		sortKeys.add(new RowSorter.SortKey(columnIndexToSort, SortOrder.ASCENDING));
-		sorter.setSortKeys(sortKeys);
-		sorter.sort();
+		sorterLC.setSortKeys(sortKeys);
+		sorterLC.sort();
 		
 		ctrlListas.cargarListaAbonos(tblListaAbonos);
-		sorter = new TableRowSorter<>(tblListaAbonos.getModel());
-		tblListaAbonos.setRowSorter(sorter);
+		sorterLA = new TableRowSorter<>(tblListaAbonos.getModel());
+		tblListaAbonos.setRowSorter(sorterLA);
 		columnIndexToSort = 1;
 		sortKeys.add(new RowSorter.SortKey(columnIndexToSort, SortOrder.ASCENDING));
-		sorter.setSortKeys(sortKeys);
-		sorter.sort();
+		sorterLA.setSortKeys(sortKeys);
+		sorterLA.sort();
 		
 		ctrlListas.cargarListaEstadosCuenta(tblListaEstadosCuenta);
-		sorter = new TableRowSorter<>(tblListaEstadosCuenta.getModel());
-		tblListaEstadosCuenta.setRowSorter(sorter);
+		sorterLEC = new TableRowSorter<>(tblListaEstadosCuenta.getModel());
+		tblListaEstadosCuenta.setRowSorter(sorterLEC);
 		columnIndexToSort = 1;
 		sortKeys.add(new RowSorter.SortKey(columnIndexToSort, SortOrder.ASCENDING));
-		sorter.setSortKeys(sortKeys);
-		sorter.sort();
+		sorterLEC.setSortKeys(sortKeys);
+		sorterLEC.sort();
 
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(List<RowSorter.SortKey> sortKeys) {
 		frmZenDigitalSystem = new JFrame();
 		frmZenDigitalSystem.setTitle("ZEN Digital System");
 		frmZenDigitalSystem.setBounds(100, 100, 789, 490);
@@ -157,34 +159,79 @@ public class Gestion {
 		JButton button_2 = new JButton("Modificar");
 		
 		JScrollPane scrpnListaClientes = new JScrollPane();
+		
+		JButton btnOrdenarLC = new JButton("Ordenar...");
+		btnOrdenarLC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				OrdenarLista ordenar = new OrdenarLista(tblListaClientes);
+				OrdenarLista.main(tblListaClientes);
+				int o1 = ordenar.getO1();
+				int o2 = ordenar.getO2();
+				int o3 = ordenar.getO3();
+				int AD1 = ordenar.getAD1();
+				int AD2 = ordenar.getAD2();
+				int AD3 = ordenar.getAD3();
+				
+				if (AD1 == 0)
+					sortKeys.add(new RowSorter.SortKey(o1, SortOrder.ASCENDING));
+				else
+					sortKeys.add(new RowSorter.SortKey(o1, SortOrder.DESCENDING));
+				if (AD2 == 0)
+					sortKeys.add(new RowSorter.SortKey(o2, SortOrder.ASCENDING));
+				else
+					sortKeys.add(new RowSorter.SortKey(o2, SortOrder.DESCENDING));
+				if (AD3 == 0)
+					sortKeys.add(new RowSorter.SortKey(o3, SortOrder.ASCENDING));
+				else
+					sortKeys.add(new RowSorter.SortKey(o3, SortOrder.DESCENDING));
+				sorterLC.setSortKeys(sortKeys);
+				sorterLC.sort();
+				
+				//No funciona porque no se llama correctamente al sorter.sort(); además, el botón "Confirmar" no estaría haciendo nada.
+			}
+		});
+		
+		JButton btnFiltrarLC = new JButton("Filtrar...");
 		GroupLayout gl_pnClientes = new GroupLayout(pnClientes);
 		gl_pnClientes.setHorizontalGroup(
 			gl_pnClientes.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_pnClientes.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(scrpnListaClientes, GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
-					.addGap(18)
-					.addGroup(gl_pnClientes.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(pnlDatosCliente, GroupLayout.PREFERRED_SIZE, 378, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_pnClientes.createParallelGroup(Alignment.LEADING, false)
-							.addGroup(gl_pnClientes.createSequentialGroup()
-								.addComponent(btnBuscar, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-								.addComponent(btnLimpiarCampos, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE))
-							.addGroup(gl_pnClientes.createSequentialGroup()
-								.addComponent(button, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
-								.addGap(14)
-								.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(button_2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-					.addGap(46))
+					.addGroup(gl_pnClientes.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, gl_pnClientes.createSequentialGroup()
+							.addComponent(scrpnListaClientes, GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_pnClientes.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(pnlDatosCliente, GroupLayout.PREFERRED_SIZE, 378, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_pnClientes.createParallelGroup(Alignment.LEADING, false)
+									.addGroup(gl_pnClientes.createSequentialGroup()
+										.addComponent(btnBuscar, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+										.addComponent(btnLimpiarCampos, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE))
+									.addGroup(gl_pnClientes.createSequentialGroup()
+										.addComponent(button, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
+										.addGap(14)
+										.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.UNRELATED)
+										.addComponent(button_2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+							.addGap(46))
+						.addGroup(gl_pnClientes.createSequentialGroup()
+							.addComponent(btnOrdenarLC)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(btnFiltrarLC, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(578, Short.MAX_VALUE))))
 		);
 		gl_pnClientes.setVerticalGroup(
 			gl_pnClientes.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_pnClientes.createSequentialGroup()
-					.addGroup(gl_pnClientes.createParallelGroup(Alignment.LEADING)
+					.addGap(4)
+					.addGroup(gl_pnClientes.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnOrdenarLC)
+						.addComponent(btnFiltrarLC))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_pnClientes.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_pnClientes.createSequentialGroup()
-							.addGap(33)
 							.addComponent(pnlDatosCliente, GroupLayout.PREFERRED_SIZE, 281, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_pnClientes.createParallelGroup(Alignment.BASELINE)
@@ -194,11 +241,9 @@ public class Gestion {
 							.addGroup(gl_pnClientes.createParallelGroup(Alignment.BASELINE)
 								.addComponent(button)
 								.addComponent(button_2)
-								.addComponent(button_1)))
-						.addGroup(gl_pnClientes.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(scrpnListaClientes, GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)))
-					.addContainerGap())
+								.addComponent(button_1))
+							.addContainerGap(35, Short.MAX_VALUE))
+						.addComponent(scrpnListaClientes, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)))
 		);
 		
 		tblListaClientes = new JTable();
@@ -372,6 +417,4 @@ public class Gestion {
 		
 		return c;
 	}
-	
-	
 }

@@ -1,52 +1,32 @@
 package ui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
-
 import java.awt.BorderLayout;
-
-import javax.swing.JTable;
-import javax.swing.JPanel;
-
-import entidades.Cliente;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JLabel;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
-import javax.swing.SwingConstants;
-import javax.swing.JInternalFrame;
-import javax.swing.JComboBox;
-import javax.swing.border.TitledBorder;
-
+import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.SystemColor;
 
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.ButtonGroup;
-
-import negocio.*;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import javax.swing.UIManager;
-import java.awt.Color;
 
-public class Gestion {
+import negocio.CtrlABMCCliente;
+import negocio.CtrlListas;
 
+public class Main {
+	
 	private CtrlABMCCliente ctrlCliente;
 	private CtrlListas ctrlListas;
 	private JFrame frmZenDigitalSystem;
@@ -65,6 +45,7 @@ public class Gestion {
 	private JTextField textField_5;
 	private JTextField textField_6;
 
+	private JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -73,8 +54,8 @@ public class Gestion {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Gestion window = new Gestion();
-					window.frmZenDigitalSystem.setVisible(true);
+					Main window = new Main();
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -85,9 +66,8 @@ public class Gestion {
 	/**
 	 * Create the application.
 	 */
-	public Gestion() {
+	public Main() {
 		initialize();
-
 	}
 
 	/**
